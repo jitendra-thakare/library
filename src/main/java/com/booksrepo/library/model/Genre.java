@@ -38,9 +38,11 @@ public class Genre {
     private String description;
 
     @Min(value = 0, message = "Display order cannot be negative.")
+    @Builder.Default()
     private Integer displayOrder = 0;
 
     @Column(nullable = false)
+    @Builder.Default()
     private Boolean active = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,6 +50,7 @@ public class Genre {
     private Genre parentGenre;
 
     @OneToMany(mappedBy = "parentGenre")
+    @Builder.Default()
     private List<Genre> subGenres = new ArrayList<>();
 
    // @OneToMany(mappedBy = "genre", cascade = CascadeType.PERSIST)

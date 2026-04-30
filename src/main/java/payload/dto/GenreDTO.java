@@ -3,8 +3,6 @@ package payload.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.booksrepo.library.model.Genre;
-
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -35,9 +33,11 @@ public class GenreDTO {
     private String description;
 
     @Min(value = 0, message = "Display order cannot be negative.")
+    @Builder.Default()
     private Integer displayOrder = 0;
 
     @Column(nullable = false)
+    @Builder.Default()
     private Boolean active = true;
     
     private long parentGenreId;

@@ -1,18 +1,26 @@
 package com.booksrepo.library.mapper;
 
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import com.booksrepo.library.model.Genre;
+import org.springframework.stereotype.Component;
 
+import com.booksrepo.library.model.Genre;
+import com.booksrepo.library.repository.GenreRepository;
+
+import lombok.RequiredArgsConstructor;
 import payload.dto.GenreDTO;
 
+@Component
+@RequiredArgsConstructor
 public class GenreMapper {
+	private final GenreRepository genreRepository;
+	
 	public static GenreDTO toGenreDTO(Genre savedGenre) {
 		if(savedGenre == null) {
 			return null;
 		}
 		GenreDTO dto = GenreDTO.builder()
+				.id(savedGenre.getId())
 				.code(savedGenre.getCode())
 				.name(savedGenre.getName())
 				.description(savedGenre.getDescription())
@@ -34,5 +42,24 @@ public class GenreMapper {
 		
 	    //dto.setBookCountLong();
 	    return dto;
+	}
+	
+	public Genre toEntity(GenreDTO genreDTO) {
+		if(genreDTO == null) {
+			return null;
+		}
+		Genre genre = Genre.builder()
+					.id(genreDTO.getId())
+	    			.code(genreDTO.getCode())
+	    			.name(genreDTO.getName())
+	    			.description(genreDTO.getDescription())
+	    			.displayOrder(genreDTO.getDisplayOrder())
+	    			.active(true)
+	    			.build();
+        if(genreDTO.getParentGenreId() != 0) {
+    		genreRepository.findById(genreDTO.getParentGenreId())
+    		.ifPresent(genre::setParentGenre);;
+        }
+        return genre;
 	}
 }
