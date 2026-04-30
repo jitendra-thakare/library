@@ -1,7 +1,10 @@
 package com.booksrepo.library.service;
 
+
 import com.booksrepo.library.model.Genre;
 
+import payload.dto.GenreDTO;
+
 public interface GenreService {
-	Genre createGenre(Genre genre);
+	GenreDTO createGenre(GenreDTO genreDTO);
 }

@@ -10,6 +10,7 @@ import com.booksrepo.library.model.Genre;
 import com.booksrepo.library.service.GenreService;
 
 import lombok.RequiredArgsConstructor;
+import payload.dto.GenreDTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +19,9 @@ public class GenreController {
 	private final GenreService genreService;
 	
 	@PostMapping
-	public ResponseEntity<Genre> addGenre(@RequestBody Genre genre){
-		Genre newGenre = genreService.createGenre(genre);
+	@RequestMapping("create")
+	public ResponseEntity<GenreDTO> addGenre(@RequestBody GenreDTO genre){
+		GenreDTO newGenre = genreService.createGenre(genre);
 		return ResponseEntity.ok(newGenre);
 	}
 }
