@@ -3,6 +3,7 @@ package com.booksrepo.library.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.booksrepo.library.mapper.GenreMapper;
 import com.booksrepo.library.model.Genre;
 import com.booksrepo.library.repository.GenreRepository;
 import com.booksrepo.library.service.GenreService;
@@ -32,23 +33,7 @@ public class GenreServiceImpl implements GenreService {
     		genre.setParentGenre(parentGenre);
         }
     	Genre savedGenre = genreRepository.save(genre);
-    	GenreDTO dto = GenreDTO.builder()
-    			.code(savedGenre.getCode())
-    			.name(savedGenre.getName())
-    			.description(savedGenre.getDescription())
-    			.displayOrder(savedGenre.getDisplayOrder())
-    			.active(true)
-    			.build();
-    	
-        if(savedGenre.getParentGenre() != null) {
-        	dto.setParentGenreId(savedGenre.getParentGenre().getId());
-        	dto.setParentGenreName(savedGenre.getParentGenre().getName());
-    		
-        }
-        
-        //dto.setSubGenre(savedGenre.getSubGenres().stream().filter(subGenre -> subGenre.getActive().map()));
-    	
-        //dto.setBookCountLong();
-    	return dto;
+
+    	return GenreMapper.toGenreDTO(savedGenre);
     }
 }
