@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.booksrepo.library.exception.GenreException;
 import com.booksrepo.library.mapper.GenreMapper;
@@ -60,18 +61,23 @@ public class GenreServiceImpl implements GenreService {
 	}
 
 	@Override
+	@Transactional
 	public void deactiveGenre(Long genreId)  throws GenreException {
-		Genre existingGenre =  genreRepository.findById(genreId).orElseThrow(
-				()-> new GenreException("Genre not found."));
-		existingGenre.setActive(false);
+	    Genre existingGenre = genreRepository.findById(genreId)
+	            .orElseThrow(() -> new GenreException("Genre not found"));
+
+	    existingGenre.setActive(false);
+	    genreRepository.save(existingGenre);
 		
 	}
 	
 	@Override
+	@Transactional
 	public void reactiveGenre(Long genreId) throws GenreException {
 		Genre existingGenre =  genreRepository.findById(genreId).orElseThrow(
 				()-> new GenreException("Genre not found."));
 		existingGenre.setActive(true);
+	    genreRepository.save(existingGenre);
 		
 	}
 

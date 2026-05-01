@@ -17,31 +17,45 @@ public class GenreMapper {
 	private final GenreRepository genreRepository;
 	
 	public GenreDTO toGenreDTO(Genre savedGenre) {
-		if(savedGenre == null) {
-			return null;
-		}
-		GenreDTO dto = GenreDTO.builder()
-				.id(savedGenre.getId())
-				.code(savedGenre.getCode())
-				.name(savedGenre.getName())
-				.description(savedGenre.getDescription())
-				.displayOrder(savedGenre.getDisplayOrder())
-				.active(true)
-				.build();
-		
-	    if(savedGenre.getParentGenre() != null) {
-	    	dto.setParentGenreId(savedGenre.getParentGenre().getId());
-	    	dto.setParentGenreName(savedGenre.getParentGenre().getName());
-			
+
+	    if (savedGenre == null) {
+	        return null;
 	    }
+
+	    GenreDTO dto = GenreDTO.builder()
+	            .id(savedGenre.getId())
+	            .code(savedGenre.getCode())
+	            .name(savedGenre.getName())
+	            .description(savedGenre.getDescription())
+	            .displayOrder(savedGenre.getDisplayOrder())
+	            .active(savedGenre.getActive())
+	            .createdAt(savedGenre.getCreatedAt())
+	            .updatedAt(savedGenre.getUpdatedAt())
+	            .build();
+
+	    if (savedGenre.getParentGenre() != null) {
+	        dto.setParentGenreId(savedGenre.getParentGenre().getId());
+	        dto.setParentGenreName(savedGenre.getParentGenre().getName());
+	    }
+
 	    
-	    if(savedGenre.getSubGenres() != null) {
-	    dto.setSubGenre(savedGenre.getSubGenres().stream()
-	    		.filter(subGenre -> subGenre.getActive())
-	    				.map(subGenre -> toGenreDTO(subGenre)).collect(Collectors.toList()));
+	    if (savedGenre.getSubGenres() != null) {
+
+	        List<GenreDTO> subGenreDtos = savedGenre.getSubGenres().stream()
+	                .filter(Genre::getActive)
+	                .map(subGenre -> GenreDTO.builder()
+	                        .id(subGenre.getId())
+	                        .code(subGenre.getCode())
+	                        .name(subGenre.getName())
+	                        .description(subGenre.getDescription())
+	                        .displayOrder(subGenre.getDisplayOrder())
+	                        .active(subGenre.getActive())
+	                        .build())
+	                .collect(Collectors.toList());
+
+	        dto.setSubGenre(subGenreDtos);
 	    }
-		
-	    //dto.setBookCountLong();
+
 	    return dto;
 	}
 	
@@ -55,7 +69,7 @@ public class GenreMapper {
 	    			.name(genreDTO.getName())
 	    			.description(genreDTO.getDescription())
 	    			.displayOrder(genreDTO.getDisplayOrder())
-	    			.active(true)
+	    			.active(genreDTO.getActive() != null ? genreDTO.getActive() : true)
 	    			.build();
         if(genreDTO.getParentGenreId() != 0) {
     		genreRepository.findById(genreDTO.getParentGenreId())
