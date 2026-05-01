@@ -1,13 +1,8 @@
 package com.booksrepo.library.service;
 
-
-import java.awt.print.Pageable;
 import java.util.List;
 
-import org.hibernate.query.Page;
-
 import com.booksrepo.library.exception.GenreException;
-
 import com.booksrepo.library.payload.dto.GenreDTO;
 
 public interface GenreService {
