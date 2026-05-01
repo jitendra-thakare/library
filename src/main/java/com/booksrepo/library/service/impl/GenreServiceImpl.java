@@ -60,14 +60,24 @@ public class GenreServiceImpl implements GenreService {
 	}
 
 	@Override
-	public void deleteGenre(Long genreId) {
-		// TODO Auto-generated method stub
+	public void deactiveGenre(Long genreId)  throws GenreException {
+		Genre existingGenre =  genreRepository.findById(genreId).orElseThrow(
+				()-> new GenreException("Genre not found."));
+		existingGenre.setActive(false);
+		
+	}
+	
+	@Override
+	public void reactiveGenre(Long genreId) throws GenreException {
+		Genre existingGenre =  genreRepository.findById(genreId).orElseThrow(
+				()-> new GenreException("Genre not found."));
 		
 	}
 
 	@Override
-	public void hardDeleteGenre(Long genreId) {
-		// TODO Auto-generated method stub
+	public void hardDeleteGenre(Long genreId)  throws GenreException {
+		Genre existingGenre =  genreRepository.findById(genreId).orElseThrow(
+				()-> new GenreException("Genre not found."));
 		
 	}
 
