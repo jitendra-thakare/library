@@ -79,6 +79,7 @@ public class GenreServiceImpl implements GenreService {
 	public void hardDeleteGenre(Long genreId)  throws GenreException {
 		Genre existingGenre =  genreRepository.findById(genreId).orElseThrow(
 				()-> new GenreException("Genre not found."));
+		genreRepository.delete(existingGenre);
 		
 	}
 
