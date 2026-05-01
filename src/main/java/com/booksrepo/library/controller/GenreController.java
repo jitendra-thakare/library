@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booksrepo.library.service.GenreService;
 
 import lombok.RequiredArgsConstructor;
-import payload.dto.GenreDTO;
+import com.booksrepo.library.payload.dto.GenreDTO;
 
 @RestController
 @RequiredArgsConstructor

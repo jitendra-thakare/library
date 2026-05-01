@@ -8,14 +8,14 @@ import com.booksrepo.library.model.Genre;
 import com.booksrepo.library.repository.GenreRepository;
 
 import lombok.RequiredArgsConstructor;
-import payload.dto.GenreDTO;
+import com.booksrepo.library.payload.dto.GenreDTO;
 
 @Component
 @RequiredArgsConstructor
 public class GenreMapper {
 	private final GenreRepository genreRepository;
 	
-	public static GenreDTO toGenreDTO(Genre savedGenre) {
+	public GenreDTO toGenreDTO(Genre savedGenre) {
 		if(savedGenre == null) {
 			return null;
 		}
@@ -60,6 +60,25 @@ public class GenreMapper {
     		genreRepository.findById(genreDTO.getParentGenreId())
     		.ifPresent(genre::setParentGenre);;
         }
+        return genre;
+	}
+	
+	public Genre updateExistingGenre(GenreDTO genreDTO, Genre genre) {
+		if(genreDTO == null || genre == null) {
+			return null;
+		}
+		genre.setCode(genreDTO.getCode());
+		genre.setName(genreDTO.getName());
+		genre.setDescription(genreDTO.getDescription());
+		genre.setDisplayOrder(genreDTO.getDisplayOrder()!=null?genreDTO.getDisplayOrder():0);
+		if(genreDTO.getActive() != null) {
+			genre.setActive(genreDTO.getActive());
+		}
+        if(genreDTO.getParentGenreId() != 0) {
+    		genreRepository.findById(genreDTO.getParentGenreId())
+    		.ifPresent(genre::setParentGenre);;
+        }
+        
         return genre;
 	}
 }
