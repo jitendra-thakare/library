@@ -9,13 +9,19 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Genre {
 
     @Id
@@ -32,9 +38,11 @@ public class Genre {
     private String description;
 
     @Min(value = 0, message = "Display order cannot be negative.")
+    @Builder.Default()
     private Integer displayOrder = 0;
 
     @Column(nullable = false)
+    @Builder.Default()
     private Boolean active = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,10 +50,11 @@ public class Genre {
     private Genre parentGenre;
 
     @OneToMany(mappedBy = "parentGenre")
+    @Builder.Default()
     private List<Genre> subGenres = new ArrayList<>();
 
-    @OneToMany(mappedBy = "genre", cascade = CascadeType.PERSIST)
-    private List<Book> books = new ArrayList<>();
+   // @OneToMany(mappedBy = "genre", cascade = CascadeType.PERSIST)
+   // private List<Book> books = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;
