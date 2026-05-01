@@ -1,5 +1,6 @@
 package com.booksrepo.library.mapper;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -81,4 +82,8 @@ public class GenreMapper {
         
         return genre;
 	}
+	
+	public List<GenreDTO> toGenreDTOList(List<Genre> genreList){
+		return genreList.stream().map(genre-> toGenreDTO(genre)).collect(Collectors.toList());	
+		}
 }
