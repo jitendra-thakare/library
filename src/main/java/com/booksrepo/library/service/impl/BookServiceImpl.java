@@ -4,17 +4,29 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.booksrepo.library.exception.GenreException;
+import com.booksrepo.library.mapper.BookMapper;
+import com.booksrepo.library.model.Book;
 import com.booksrepo.library.payload.dto.BookDTO;
+import com.booksrepo.library.repository.BookRepository;
 import com.booksrepo.library.service.BookService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class BookServiceImpl implements BookService {@Override
-	public BookDTO createBook(BookDTO bookDTO) {
-		// TODO Auto-generated method stub
-		return null;
+public class BookServiceImpl implements BookService {
+	private final BookRepository bookRepository;
+	private final BookMapper bookMapper;
+	
+	@Override
+	public BookDTO createBook(BookDTO bookDTO) throws GenreException {
+		if(bookRepository.existsByIsbn(bookDTO.getIsbn())) {
+			throw new RuntimeException("Book with the same ISBN already exists.");
+		}
+		Book book = bookMapper.toBookEntity(bookDTO);
+		Book savedBook = bookRepository.save(book);
+		return bookMapper.toBookDTO(savedBook);
 	}
 
 	@Override

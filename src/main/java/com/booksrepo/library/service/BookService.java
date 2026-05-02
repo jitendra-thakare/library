@@ -9,7 +9,7 @@ import com.booksrepo.library.payload.request.BookSearchRequest;
 import com.booksrepo.library.payload.response.PageResponse;
 
 public interface BookService {
-	BookDTO createBook(BookDTO bookDTO);
+	BookDTO createBook(BookDTO bookDTO) throws Exception;
 	List<BookDTO> createBooksBulk(List<BookDTO> bookDTOList);
 	BookDTO getBookById(Long bookId);
 	BookDTO updateBook(Long bookId, BookDTO bookDTO);
