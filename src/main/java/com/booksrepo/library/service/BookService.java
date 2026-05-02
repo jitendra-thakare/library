@@ -17,7 +17,7 @@ public interface BookService {
 	void reactivateBook(Long bookId);
 	void hardDeleteBook(Long bookId);
 	
-	PageResponse<BookDTO> searchBooksWithFilters(BookSearchRequest searchRequest);
+	//PageResponse<BookDTO> searchBooksWithFilters(BookSearchRequest searchRequest);
 	Long getTotalActiveBooks();
 	Long getTotalAvailableBooks();
 	
