@@ -51,9 +51,11 @@ public class Book {
     @ManyToOne
     private Genre genre;
     
+    private String publisher;
+    
     private String publication;
     
-     private LocalDateTime publishedDate;
+     private LocalDateTime publicationDate;
      
      private String language;
      
