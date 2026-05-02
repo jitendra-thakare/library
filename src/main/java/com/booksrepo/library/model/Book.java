@@ -53,8 +53,6 @@ public class Book {
     
     private String publisher;
     
-    private String publication;
-    
      private LocalDateTime publicationDate;
      
      private String language;

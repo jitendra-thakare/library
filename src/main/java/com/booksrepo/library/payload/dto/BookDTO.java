@@ -49,7 +49,12 @@ public class BookDTO {
 	    private String author;
 
 	    @NotNull(message = "Genre is mandatory.")
-	    private Genre genre;
+	    private String genreName;
+	    
+	    @NotNull(message = "Genre Id is mandatory.")
+	    private Long genreId;
+	    
+	    
 	    
 	    @Size(min=1, max = 255, message = "Publisher length should be less than 255.")
 	    private String publisher;
